@@ -1,0 +1,187 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Button from '@/components/Button.astro';
+import SectionHeader from '@/components/SectionHeader.astro';
+import siteData from '@/data/site.json';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const services = await getCollection('services');
+  return services.map((service) => ({
+    params: { slug: service.slug },
+    props: { service },
+  }));
+}
+
+const { service } = Astro.props;
+const { Content } = await service.render();
+
+// Get other services for "Related Services" section
+const allServices = await getCollection('services');
+const otherServices = allServices
+  .filter(s => s.slug !== service.slug)
+  .sort((a, b) => (a.data.order || 0) - (b.data.order || 0))
+  .slice(0, 2);
+---
+
+<BaseLayout title={service.data.title} description={service.data.shortDescription}>
+  <!-- Hero -->
+  <section class="pt-32 pb-16 bg-gradient-to-b from-sage-50 to-cream-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center gap-2 text-sm text-earth-500 mb-6">
+        <a href="/services" class="hover:text-sage-600 transition-colors">Services</a>
+        <span>/</span>
+        <span class="text-sage-700">{service.data.title}</span>
+      </div>
+      
+      <div class="grid lg:grid-cols-2 gap-12 items-center">
+        <div>
+          <h1 class="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold text-sage-900 leading-tight">
+            {service.data.title}
+          </h1>
+          {service.data.shortDescription && (
+            <p class="mt-6 text-xl text-earth-600 leading-relaxed">
+              {service.data.shortDescription}
+            </p>
+          )}
+          
+          <div class="mt-8 flex flex-wrap gap-4">
+            <Button href="/contact" style="primary" size="lg">
+              Book This Service
+            </Button>
+            <Button href="/how-it-works" style="outline" size="lg">
+              Learn Our Process
+            </Button>
+          </div>
+          
+          {(service.data.duration || service.data.price) && (
+            <div class="mt-8 flex flex-wrap gap-6 pt-6 border-t border-cream-300">
+              {service.data.duration && (
+                <div class="flex items-center gap-2">
+                  <svg class="w-5 h-5 text-sage-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                  </svg>
+                  <span class="text-earth-600">{service.data.duration}</span>
+                </div>
+              )}
+              {service.data.price && (
+                <div class="flex items-center gap-2">
+                  <span class="text-lg font-semibold text-sage-700">{service.data.price}</span>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+        
+        {service.data.image && (
+          <div class="relative hidden lg:block">
+            <div class="aspect-[4/3] rounded-3xl overflow-hidden shadow-xl">
+              <img 
+                src={service.data.image} 
+                alt={service.data.title}
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="absolute -bottom-6 -left-6 w-32 h-32 bg-warm-100 rounded-2xl -z-10"></div>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  {service.data.features && service.data.features.length > 0 && (
+    <section class="py-16 bg-cream-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="font-display text-2xl font-semibold text-sage-900 mb-8">
+          What's Included
+        </h2>
+        <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {service.data.features.map((feature) => (
+            <div class="bg-white rounded-xl p-6 shadow-sm">
+              <div class="w-10 h-10 bg-sage-100 rounded-lg flex items-center justify-center mb-4">
+                <svg class="w-5 h-5 text-sage-600" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+                </svg>
+              </div>
+              <p class="text-earth-700 font-medium">{feature}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Main Content -->
+  <section class="py-16 bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="prose prose-sage prose-lg max-w-none prose-headings:font-display prose-headings:text-sage-900 prose-a:text-sage-600 prose-a:no-underline hover:prose-a:underline">
+        <Content />
+      </div>
+    </div>
+  </section>
+
+  <!-- Related Services -->
+  {otherServices.length > 0 && (
+    <section class="py-16 bg-cream-100">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <SectionHeader 
+          headline="Other Services You May Like"
+          description="Explore our full range of wellness services."
+        />
+        
+        <div class="mt-12 grid md:grid-cols-2 gap-8">
+          {otherServices.map((related) => (
+            <a href={`/services/${related.slug}`} class="group block bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-lg transition-all">
+              {related.data.image && (
+                <div class="aspect-[16/9] overflow-hidden">
+                  <img 
+                    src={related.data.image} 
+                    alt={related.data.title}
+                    class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                </div>
+              )}
+              <div class="p-6">
+                <h3 class="font-display text-xl font-semibold text-sage-900 group-hover:text-sage-700 transition-colors">
+                  {related.data.title}
+                </h3>
+                {related.data.shortDescription && (
+                  <p class="mt-2 text-earth-600 text-sm">
+                    {related.data.shortDescription}
+                  </p>
+                )}
+              </div>
+            </a>
+          ))}
+        </div>
+        
+        <div class="mt-8 text-center">
+          <Button href="/services" style="outline">
+            View All Services
+          </Button>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- CTA -->
+  <section class="py-24 bg-sage-800">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <h2 class="font-display text-3xl sm:text-4xl font-semibold text-cream-100">
+        Ready to get started with {service.data.title}?
+      </h2>
+      <p class="mt-4 text-xl text-cream-300">
+        Book your appointment today and take the first step toward better health.
+      </p>
+      <div class="mt-10 flex flex-wrap justify-center gap-4">
+        <Button href="/contact" style="secondary" size="lg">
+          Book an Appointment
+        </Button>
+        <Button href="/how-it-works" style="outline" size="lg" class="border-cream-400/30 text-cream-100 hover:bg-cream-100/10">
+          Learn Our Process
+        </Button>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,0 +1,90 @@
+---
+import siteData from '@/data/site.json';
+const { navigation, company, branding } = siteData;
+const currentPath = Astro.url.pathname;
+---
+
+<header class="sticky top-0 z-50 bg-cream-50/95 backdrop-blur-sm border-b border-cream-300/50">
+  <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-20">
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-3">
+        <img src={branding.logo} alt={company.name} class="h-10 w-auto" />
+        <span class="font-display text-xl font-semibold text-sage-800 hidden sm:block">
+          {company.name}
+        </span>
+      </a>
+      
+      <!-- Desktop Navigation -->
+      <div class="hidden md:flex items-center gap-8">
+        {navigation.items.map((item) => (
+          <a 
+            href={item.href}
+            class:list={[
+              "text-sm font-medium transition-colors hover:text-sage-600",
+              currentPath === item.href ? "text-sage-700" : "text-earth-600"
+            ]}
+          >
+            {item.label}
+          </a>
+        ))}
+        
+        {navigation.ctaButton && (
+          <a 
+            href={navigation.ctaButton.href}
+            class="inline-flex items-center justify-center px-5 py-2.5 bg-sage-600 text-white text-sm font-medium rounded-full hover:bg-sage-700 transition-colors"
+          >
+            {navigation.ctaButton.label}
+          </a>
+        )}
+      </div>
+      
+      <!-- Mobile Menu Button -->
+      <button 
+        type="button"
+        class="md:hidden p-2 text-earth-600 hover:text-sage-600"
+        aria-label="Open menu"
+        id="mobile-menu-button"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+    
+    <!-- Mobile Navigation -->
+    <div class="md:hidden hidden" id="mobile-menu">
+      <div class="py-4 space-y-3 border-t border-cream-300/50">
+        {navigation.items.map((item) => (
+          <a 
+            href={item.href}
+            class:list={[
+              "block py-2 text-base font-medium transition-colors hover:text-sage-600",
+              currentPath === item.href ? "text-sage-700" : "text-earth-600"
+            ]}
+          >
+            {item.label}
+          </a>
+        ))}
+        
+        {navigation.ctaButton && (
+          <a 
+            href={navigation.ctaButton.href}
+            class="block w-full text-center mt-4 px-5 py-3 bg-sage-600 text-white text-base font-medium rounded-full hover:bg-sage-700 transition-colors"
+          >
+            {navigation.ctaButton.label}
+          </a>
+        )}
+      </div>
+    </div>
+  </nav>
+</header>
+
+<script>
+  const menuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  
+  menuButton?.addEventListener('click', () => {
+    mobileMenu?.classList.toggle('hidden');
+  });
+</script>

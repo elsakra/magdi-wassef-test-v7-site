@@ -1,0 +1,16 @@
+{
+  "id": "healthcare-wellness",
+  "name": "Healthcare Wellness",
+  "industry": "healthcare",
+  "tags": ["wellness", "functional medicine", "telehealth", "therapy", "coaching", "holistic", "mental health", "nutrition", "naturopath"],
+  "description": "Warm, approachable design for wellness practices, functional medicine, telehealth, therapy, and coaching. Inspired by Parsley Health.",
+  "status": "approved",
+  "pages": ["home", "about", "services", "how-it-works", "blog", "contact"],
+  "contentCollections": ["team", "services", "testimonials", "blog", "faq"],
+  "previewUrl": null,
+  "sourceInspiration": "https://www.parsleyhealth.com",
+  "createdAt": "2026-01-17",
+  "updatedAt": "2026-01-17",
+  "approvedAt": "2026-01-17",
+  "approvedBy": "user"
+}

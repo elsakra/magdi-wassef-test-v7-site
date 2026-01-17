@@ -1,0 +1,95 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import siteData from '@/data/site.json';
+
+const { company } = siteData;
+const lastUpdated = "January 1, 2024";
+---
+
+<BaseLayout title="Terms of Service">
+  <section class="pt-32 pb-16 bg-gradient-to-b from-sage-50 to-cream-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="font-display text-4xl sm:text-5xl font-semibold text-sage-900">
+        Terms of Service
+      </h1>
+      <p class="mt-4 text-earth-600">
+        Last updated: {lastUpdated}
+      </p>
+    </div>
+  </section>
+
+  <section class="py-16 bg-cream-50">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="prose prose-sage prose-lg max-w-none prose-headings:font-display prose-headings:text-sage-900">
+        <p class="lead">
+          Welcome to {company.name}. By accessing or using our services, you agree to be bound by these Terms of Service. Please read them carefully.
+        </p>
+
+        <h2>Acceptance of Terms</h2>
+        <p>By using our website, scheduling appointments, or receiving services from {company.name}, you acknowledge that you have read, understood, and agree to be bound by these Terms of Service and our Privacy Policy.</p>
+
+        <h2>Services Description</h2>
+        <p>{company.name} provides healthcare and wellness services. Our services are intended for informational and educational purposes and to support your health journey. We are not a substitute for emergency medical care.</p>
+
+        <h2>Eligibility</h2>
+        <p>Our services are available to individuals who are at least 18 years old or have parental/guardian consent. By using our services, you represent that you meet these eligibility requirements.</p>
+
+        <h2>Appointments and Cancellations</h2>
+        <ul>
+          <li><strong>Scheduling:</strong> Appointments can be scheduled through our website, by phone, or in person.</li>
+          <li><strong>Cancellation Policy:</strong> We require at least 24 hours notice for appointment cancellations. Late cancellations or no-shows may be subject to a fee.</li>
+          <li><strong>Late Arrivals:</strong> If you arrive late, your appointment may be shortened or rescheduled to accommodate other patients.</li>
+        </ul>
+
+        <h2>Payment and Insurance</h2>
+        <ul>
+          <li>Payment is due at the time of service unless other arrangements have been made.</li>
+          <li>We accept various forms of payment including credit cards, HSA/FSA, and cash.</li>
+          <li>If we accept your insurance, we will submit claims on your behalf, but you are responsible for any amounts not covered.</li>
+          <li>You are responsible for understanding your insurance benefits and coverage.</li>
+        </ul>
+
+        <h2>Patient Responsibilities</h2>
+        <p>As a patient, you agree to:</p>
+        <ul>
+          <li>Provide accurate and complete health information</li>
+          <li>Follow agreed-upon treatment plans and recommendations</li>
+          <li>Ask questions when you don't understand something</li>
+          <li>Notify us of any changes in your health status</li>
+          <li>Treat our staff with respect and courtesy</li>
+        </ul>
+
+        <h2>Limitations of Services</h2>
+        <p>Our services are not intended to:</p>
+        <ul>
+          <li>Replace emergency medical care—if you have a medical emergency, call 911</li>
+          <li>Diagnose or treat acute illness that requires immediate attention</li>
+          <li>Guarantee specific health outcomes</li>
+        </ul>
+
+        <h2>Intellectual Property</h2>
+        <p>All content on our website, including text, graphics, logos, and images, is the property of {company.name} and is protected by copyright and trademark laws. You may not reproduce, distribute, or create derivative works without our written permission.</p>
+
+        <h2>Disclaimer of Warranties</h2>
+        <p>Our services are provided "as is" without warranties of any kind. We do not guarantee that our services will meet your specific health goals or that any particular outcome will be achieved.</p>
+
+        <h2>Limitation of Liability</h2>
+        <p>To the fullest extent permitted by law, {company.name} shall not be liable for any indirect, incidental, special, or consequential damages arising from your use of our services.</p>
+
+        <h2>Changes to Terms</h2>
+        <p>We reserve the right to modify these Terms of Service at any time. Changes will be effective immediately upon posting. Your continued use of our services constitutes acceptance of the modified terms.</p>
+
+        <h2>Governing Law</h2>
+        <p>These Terms of Service shall be governed by and construed in accordance with the laws of the state in which we operate, without regard to conflict of law principles.</p>
+
+        <h2>Contact Information</h2>
+        <p>If you have questions about these Terms of Service, please contact us:</p>
+        <p>
+          {company.name}<br />
+          Email: {company.email}<br />
+          Phone: {company.phone}
+        </p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

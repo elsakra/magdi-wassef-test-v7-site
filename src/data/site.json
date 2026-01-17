@@ -1,0 +1,88 @@
+{
+  "company": {
+    "name": "Southaven Internal Medicine",
+    "tagline": "Dedicated to our patients since 1996",
+    "description": "Southaven Internal Medicine has been committed to providing our patients with the highest level of care in a friendly and comfortable environment. Our goal is to make our patients feel like they are family. As a practice, we focus on preventative medicine, health screenings, and helping our community find solutions to the health challenges they face. Our board certified physicians will work with you to achieve the best possible state of health and well being.",
+    "phone": "(662) 349-1999",
+    "email": null,
+    "address": "7680 Airways Blvd. Southaven, MS 38671",
+    "hours": "Monday & Wednesday: 7:00 am-5:00 pm, Tuesday & Thursday 8:00 am-5:00 pm, Friday 7:00 am-11:00 am"
+  },
+  "branding": {
+    "logo": "https://res.cloudinary.com/dil14r8je/image/upload/v1768688424/auto-site-builder/Magdi%20Wassef%20Test%20v7/image_0.jpg",
+    "primaryColor": "#1e40af",
+    "secondaryColor": null
+  },
+  "hero": {
+    "headline": "Southaven Internal Medicine",
+    "subheadline": "Dedicated to our patients since 1996",
+    "cta": {
+      "label": "Click Here to Pre Register",
+      "href": "/contact"
+    },
+    "secondaryCta": null,
+    "backgroundImage": "https://res.cloudinary.com/dil14r8je/image/upload/v1768688424/auto-site-builder/Magdi%20Wassef%20Test%20v7/image_3.png"
+  },
+  "sections": {
+    "about": {
+      "headline": "About Us",
+      "content": "Southaven Internal Medicine has been committed to providing our patients with the highest level of care in a friendly and comfortable environment. Our goal is to make our patients feel like they are family. As a practice, we focus on preventative medicine, health screenings, and helping our community find solutions to the health challenges they face. Our board certified physicians will work with you to achieve the best possible state of health and well being.",
+      "image": "https://res.cloudinary.com/dil14r8je/image/upload/v1768688424/auto-site-builder/Magdi%20Wassef%20Test%20v7/image_1.jpg"
+    },
+    "services": {
+      "headline": "Our Services",
+      "description": "We focus on preventative medicine, health screenings, and helping our community find solutions to the health challenges they face. We also offer telehealth options and on-site blood work through American Esoteric Laboratories."
+    },
+    "team": {
+      "headline": "Meet our Providers",
+      "description": "Our board certified physicians will work with you to achieve the best possible state of health and well being."
+    },
+    "testimonials": {
+      "headline": "What Our Clients Say"
+    },
+    "contact": {
+      "headline": "Contact Us",
+      "description": "Call us today at (662) 349-1999. We are located at 7680 Airways Blvd. Southaven, MS 38671."
+    }
+  },
+  "navigation": {
+    "items": [
+      {
+        "label": "Home",
+        "href": "/"
+      },
+      {
+        "label": "Patient Portal",
+        "href": "/contact"
+      },
+      {
+        "label": "Hours & Location",
+        "href": "/contact"
+      },
+      {
+        "label": "Meet our Providers",
+        "href": "/about#team"
+      },
+      {
+        "label": "FAQ",
+        "href": "/contact"
+      }
+    ],
+    "ctaButton": {
+      "label": "Click Here to Pre Register",
+      "href": "/contact"
+    }
+  },
+  "footer": {
+    "copyright": "© 2024 Southaven Internal Medicine. All rights reserved.",
+    "socialLinks": {
+      "facebook": null,
+      "instagram": null
+    }
+  },
+  "seo": {
+    "title": "Home | Mysite",
+    "description": null,
+    "keywords": []
+  }
+}

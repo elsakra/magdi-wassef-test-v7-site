@@ -1,0 +1,86 @@
+/** @type {import('tailwindcss').Config} */
+export default {
+  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+  // Safelist critical responsive classes to prevent purging
+  safelist: [
+    'hidden',
+    'block',
+    'flex',
+    'grid',
+    'sm:block',
+    'sm:hidden',
+    'sm:flex',
+    'md:block',
+    'md:hidden',
+    'md:flex',
+    'md:grid-cols-2',
+    'md:grid-cols-3',
+    'lg:block',
+    'lg:hidden',
+    'lg:flex',
+    'lg:grid-cols-2',
+    'lg:grid-cols-3',
+  ],
+  theme: {
+    extend: {
+      colors: {
+        // Warm wellness palette inspired by Parsley Health
+        cream: {
+          50: '#FEFDFB',
+          100: '#FDF9F3',
+          200: '#FAF3E8',
+          300: '#F5E9D8',
+          400: '#EDD9C0',
+          500: '#E3C8A8',
+        },
+        sage: {
+          50: '#F6F7F4',
+          100: '#E8EBE3',
+          200: '#D1D8C7',
+          300: '#B3BEA3',
+          400: '#94A37F',
+          500: '#768A5E',
+          600: '#5D6E4A',
+          700: '#4A5A3C',
+          800: '#3D4832',
+          900: '#333C2B',
+        },
+        warm: {
+          50: '#FEF7F0',
+          100: '#FDEEE0',
+          200: '#FBDCC0',
+          300: '#F7C495',
+          400: '#F2A563',
+          500: '#EC8B3A',
+          600: '#DD7020',
+          700: '#B8591B',
+          800: '#93481D',
+          900: '#773D1C',
+        },
+        earth: {
+          50: '#F9F7F5',
+          100: '#F0EBE5',
+          200: '#E0D5C9',
+          300: '#CDB9A5',
+          400: '#B7997F',
+          500: '#A58167',
+          600: '#976E55',
+          700: '#7D5A47',
+          800: '#674A3D',
+          900: '#564035',
+        },
+      },
+      fontFamily: {
+        display: ['Cormorant Garamond', 'Georgia', 'serif'],
+        body: ['Lato', 'system-ui', 'sans-serif'],
+      },
+      fontSize: {
+        '4.5xl': ['2.5rem', { lineHeight: '1.15' }],
+        '5.5xl': ['3.25rem', { lineHeight: '1.1' }],
+      },
+    },
+  },
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
+};

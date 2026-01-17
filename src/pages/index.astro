@@ -1,0 +1,303 @@
+---
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import Button from '@/components/Button.astro';
+import SectionHeader from '@/components/SectionHeader.astro';
+import Card from '@/components/Card.astro';
+import TestimonialCard from '@/components/TestimonialCard.astro';
+import siteData from '@/data/site.json';
+import { getCollection } from 'astro:content';
+
+const services = await getCollection('services');
+const testimonials = await getCollection('testimonials');
+const team = await getCollection('team');
+
+const { hero, sections, company } = siteData;
+const sortedServices = services.sort((a, b) => (a.data.order || 0) - (b.data.order || 0)).slice(0, 3);
+const featuredTestimonials = testimonials.filter(t => t.data.featured).slice(0, 3);
+const sortedTeam = team.sort((a, b) => (a.data.order || 0) - (b.data.order || 0)).slice(0, 3);
+---
+
+<BaseLayout>
+  <!-- Hero Section -->
+  <section class="relative min-h-[90vh] flex items-center bg-gradient-to-br from-cream-100 via-cream-50 to-sage-50">
+    <!-- Background Pattern -->
+    <div class="absolute inset-0 opacity-30">
+      <div class="absolute top-20 right-20 w-72 h-72 bg-sage-200 rounded-full blur-3xl"></div>
+      <div class="absolute bottom-20 left-20 w-96 h-96 bg-warm-100 rounded-full blur-3xl"></div>
+    </div>
+    
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        <div class="max-w-2xl">
+          <h1 class="font-display text-4xl sm:text-5xl lg:text-6xl font-semibold text-sage-900 tracking-tight leading-tight">
+            {hero.headline}
+          </h1>
+          {hero.subheadline && (
+            <p class="mt-6 text-xl text-earth-600 leading-relaxed">
+              {hero.subheadline}
+            </p>
+          )}
+          <div class="mt-10 flex flex-wrap gap-4">
+            <Button href={hero.cta.href} style="primary" size="lg">
+              {hero.cta.label}
+            </Button>
+            {hero.secondaryCta && (
+              <Button href={hero.secondaryCta.href} style="outline" size="lg">
+                {hero.secondaryCta.label}
+              </Button>
+            )}
+          </div>
+        </div>
+        
+        {hero.backgroundImage && (
+          <div class="relative hidden lg:block">
+            <div class="aspect-[4/5] rounded-3xl overflow-hidden shadow-2xl">
+              <img 
+                src={hero.backgroundImage} 
+                alt={company.name}
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <!-- Floating accent -->
+            <div class="absolute -bottom-6 -left-6 w-48 h-48 bg-warm-100 rounded-2xl -z-10"></div>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- Social Proof Stats -->
+  {siteData.socialProof?.stats && (
+    <section class="bg-sage-800 py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+          {siteData.socialProof.stats.map((stat) => (
+            <div class="text-center">
+              <p class="font-display text-3xl sm:text-4xl font-bold text-cream-100">
+                {stat.value}
+              </p>
+              <p class="mt-1 text-cream-300 text-sm">
+                {stat.label}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- About Section -->
+  <section class="py-24 bg-cream-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+        {sections.about?.image && (
+          <div class="relative">
+            <div class="aspect-square rounded-3xl overflow-hidden shadow-lg">
+              <img 
+                src={sections.about.image} 
+                alt="About us"
+                class="w-full h-full object-cover"
+              />
+            </div>
+            <div class="absolute -top-4 -right-4 w-32 h-32 bg-sage-100 rounded-2xl -z-10"></div>
+          </div>
+        )}
+        <div>
+          <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold text-sage-900">
+            {sections.about?.headline}
+          </h2>
+          <p class="mt-6 text-lg text-earth-600 leading-relaxed">
+            {sections.about?.content}
+          </p>
+          
+          {sections.about?.values && (
+            <div class="mt-10 grid gap-6">
+              {sections.about.values.map((value) => (
+                <div class="flex gap-4">
+                  <div class="flex-shrink-0 w-12 h-12 bg-sage-100 rounded-xl flex items-center justify-center">
+                    <svg class="w-6 h-6 text-sage-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 class="font-semibold text-sage-900">{value.title}</h3>
+                    <p class="mt-1 text-earth-600 text-sm">{value.description}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+          
+          <div class="mt-10">
+            <Button href="/about" style="outline">
+              Learn More About Us
+            </Button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section - Only show if services exist -->
+  {sortedServices.length > 0 && (
+    <section class="py-24 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <SectionHeader 
+          headline={sections.services?.headline || "Our Services"} 
+          description={sections.services?.description}
+        />
+        
+        <div class="mt-16 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {sortedServices.map((service) => (
+            <Card 
+              title={service.data.title}
+              description={service.data.shortDescription}
+              image={service.data.image}
+              href={`/services/${service.slug}`}
+            />
+          ))}
+        </div>
+        
+        <div class="mt-12 text-center">
+          <Button href="/services" style="outline">
+            View All Services
+          </Button>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- How It Works Section -->
+  {sections.howItWorks && (
+    <section class="py-24 bg-sage-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <SectionHeader 
+          headline={sections.howItWorks.headline} 
+          description={sections.howItWorks.description}
+        />
+        
+        <div class="mt-16 grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          {sections.howItWorks.steps?.map((step, index) => (
+            <div class="relative">
+              {index < (sections.howItWorks?.steps?.length || 0) - 1 && (
+                <div class="hidden lg:block absolute top-8 left-full w-full h-0.5 bg-sage-200 -translate-x-1/2"></div>
+              )}
+              <div class="bg-white rounded-2xl p-8 shadow-sm h-full">
+                <span class="font-display text-4xl font-bold text-sage-200">
+                  {step.number}
+                </span>
+                <h3 class="mt-4 font-display text-xl font-semibold text-sage-900">
+                  {step.title}
+                </h3>
+                <p class="mt-2 text-earth-600 text-sm leading-relaxed">
+                  {step.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        <div class="mt-12 text-center">
+          <Button href="/how-it-works" style="primary">
+            Learn More
+          </Button>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Testimonials Section -->
+  {featuredTestimonials.length > 0 && (
+    <section class="py-24 bg-cream-100">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <SectionHeader 
+          headline={sections.testimonials?.headline || "What Our Members Say"} 
+          description={sections.testimonials?.description}
+        />
+        
+        <div class="mt-16 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {featuredTestimonials.map(async (testimonial) => {
+            const { Content } = await testimonial.render();
+            return (
+              <TestimonialCard 
+                quote={testimonial.body}
+                author={testimonial.data.author}
+                role={testimonial.data.role}
+                image={testimonial.data.image}
+                rating={testimonial.data.rating}
+              />
+            );
+          })}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- Team Preview -->
+  {sortedTeam.length > 0 && (
+    <section class="py-24 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <SectionHeader 
+          headline={sections.team?.headline || "Meet Your Care Team"} 
+          description={sections.team?.description}
+        />
+        
+        <div class="mt-16 grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {sortedTeam.map((member) => (
+            <div class="text-center">
+              {member.data.image && (
+                <div class="mx-auto w-48 h-48 rounded-full overflow-hidden shadow-lg mb-6">
+                  <img 
+                    src={member.data.image} 
+                    alt={member.data.name}
+                    class="w-full h-full object-cover"
+                  />
+                </div>
+              )}
+              <h3 class="font-display text-xl font-semibold text-sage-900">
+                {member.data.name}
+              </h3>
+              <p class="mt-1 text-sage-600">{member.data.role}</p>
+            </div>
+          ))}
+        </div>
+        
+        <div class="mt-12 text-center">
+          <Button href="/about#team" style="outline">
+            Meet the Full Team
+          </Button>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <!-- CTA Section -->
+  {sections.cta && (
+    <section class="relative py-24 bg-sage-800 overflow-hidden">
+      {sections.cta.backgroundImage && (
+        <div class="absolute inset-0 opacity-20">
+          <img 
+            src={sections.cta.backgroundImage} 
+            alt=""
+            class="w-full h-full object-cover"
+          />
+        </div>
+      )}
+      <div class="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold text-cream-100">
+          {sections.cta.headline}
+        </h2>
+        {sections.cta.description && (
+          <p class="mt-6 text-xl text-cream-300">
+            {sections.cta.description}
+          </p>
+        )}
+        <div class="mt-10">
+          <Button href={sections.cta.cta.href} style="secondary" size="lg">
+            {sections.cta.cta.label}
+          </Button>
+        </div>
+      </div>
+    </section>
+  )}
+</BaseLayout>

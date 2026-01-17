@@ -1,0 +1,25 @@
+---
+interface Props {
+  headline: string;
+  description?: string;
+  centered?: boolean;
+  class?: string;
+}
+
+const { headline, description, centered = true, class: className } = Astro.props;
+---
+
+<div class:list={[
+  "max-w-3xl",
+  centered && "mx-auto text-center",
+  className
+]}>
+  <h2 class="font-display text-3xl sm:text-4xl lg:text-5xl font-semibold text-sage-900 tracking-tight">
+    {headline}
+  </h2>
+  {description && (
+    <p class="mt-4 text-lg text-earth-600 leading-relaxed">
+      {description}
+    </p>
+  )}
+</div>
